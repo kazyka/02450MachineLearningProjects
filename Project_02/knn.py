@@ -7,15 +7,7 @@ import numpy as np
 from scipy.io import loadmat
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import cross_validation
-import resolve_path
-
-# Load data from matlab file
-X = np.loadtxt('./insuranceCompany_Data/ticdata2000.txt')
-y = X[:,-1]
-X = X[:, 0:-1]
-
-N = X.shape[0]
-M = X.shape[1]
+from resolve_path import *
 
 X_train2, X_test2, y_train2, y_test2 = cross_validation.train_test_split(X, y, test_size=0.2, random_state=0)
 
@@ -29,9 +21,9 @@ K = 10
 CV = cross_validation.KFold(X_train2.shape[0],K,shuffle=True)
 
 errors = np.zeros((K,L))
-i=0
+k=0
 for train_index, test_index in CV:
-    print('Crossvalidation fold: {0}/{1}'.format(i+1,K))
+    print('Crossvalidation fold: {0}/{1}'.format(k+1,K))
 
     # extract training and test set for current CV fold
     X_train, y_train = X_train2[train_index,:], y_train2[train_index]
@@ -42,9 +34,8 @@ for train_index, test_index in CV:
         knclassifier = KNeighborsClassifier(n_neighbors=l, p=1);
         knclassifier.fit(X_train, y_train);
         y_est = knclassifier.predict(X_test);
-        errors[i,l-1] = np.sum(y_est!=y_test)
-
-    i+=1
+        errors[k,l-1] = np.sum(y_est!=y_test)
+    k+=1
 
 # Plot the classification error rate
 figure()

@@ -6,15 +6,7 @@ DecisionTreeClassifier
 from pylab import *
 from scipy.io import loadmat
 from sklearn import cross_validation, tree
-import resolve_path
-
-# Load data from matlab file
-X = np.loadtxt('./insuranceCompany_Data/ticdata2000.txt')
-y = X[:,-1]
-X = X[:, 0:-1]
-
-N = X.shape[0]
-M = X.shape[1]
+from resolve_path import *
 
 ## Crossvalidation
 # Tree complexity parameter - constraint on maximum depth

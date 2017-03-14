@@ -5,14 +5,7 @@ MultinomialNB (Naive Bayes)
 import numpy as np
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import cross_validation
-
-# Load data from matlab file
-X = np.loadtxt('./insuranceCompany_Data/ticdata2000.txt')
-y = X[:,-1]
-X = X[:, 0:-1]
-
-N = X.shape[0]
-M = X.shape[1]
+from resolve_path import *
 
 X_train2, X_test2, y_train2, y_test2 = cross_validation.train_test_split(X, y, test_size=0.2, random_state=0)
 
