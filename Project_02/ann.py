@@ -22,7 +22,7 @@ for train_index, test_index in CV:
     X_test, y_test = X_train2[test_index,:], y_train2[test_index]
 
     for i in range(0,l1_max_nodes):
-    	dnn_classifier = nn.MLPClassifier(solver='adam',alpha=1e-4,hidden_layer_sizes=(i+1,),random_state=0,max_iter=200,activation='tanh')
+    	dnn_classifier = nn.MLPClassifier(solver='adam',alpha=1e-4,hidden_layer_sizes=(i+1,),random_state=0,max_iter=200,activation='relu')
     	dnn_classifier.fit(X_train, y_train)
     	y_est = dnn_classifier.predict(X_test)
     	errors[k,i] = np.sum(y_est!=y_test,dtype=float)/y_test.shape[0]
