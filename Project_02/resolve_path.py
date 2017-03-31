@@ -32,15 +32,19 @@ y = X[:,-1]
 X = X[:, 0:-1]
 
 ## Uncomment to balance class CARAVAN
-# idx = np.where(y==0)[0]
-# keepIdx = np.where(y==1)[0]
-# chosenIdx = np.random.choice(idx, size=(400,), replace=False)
+# idx, keepIdx = np.where(y==0)[0], np.where(y==1)[0]
+# under_R, over_R = 1.2, 2
+# keepIdx = np.repeat(keepIdx, over_R) # Repeat positive class for over_R times
+# chosenIdx = np.random.choice(idx, size=(int(under_R*len(keepIdx)),),
+#     replace=False) # Reduce negative class to under_R times the positive class
 # totalIdx = np.append(keepIdx,chosenIdx)
 # totalIdx.sort()
 # X = X[totalIdx,:]
 # y = y[totalIdx]
 
 ## Uncoment to use one-out-of-k encoding
+# For attr in [50,52]: [50, 51, 52] <=> [2, 3, 4]
+# For attr > 52: Offset -48 to get the orignal attribute num (one-indexed)
 one_out_of_k = [0,4]
 for i in X:
     for j in one_out_of_k:

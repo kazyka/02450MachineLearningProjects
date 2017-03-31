@@ -23,7 +23,7 @@ N_cv2 = X_cv2.shape[0]
 
 ### Initialize parameters used in the classifiers
 ## DecisionTreeClassifier
-D = 20
+D = 30
 Tc = np.arange(2, D+2, 1)
 criterion = 'gini'
 
@@ -39,8 +39,8 @@ L = 20  # Maximum number of neighbors
 p = 2   # Distance measure (1: Manhattan, 2: Euclidean)
 
 ## MLPClassifier (ANN)
-l1_max_nodes = 8    # Maximum number of first hidden layer units
-l2_max_nodes = 8    # Maximum number of second hidden layer units
+l1_max_nodes = 12    # Maximum number of first hidden layer units
+l2_max_nodes = 12    # Maximum number of second hidden layer units
 
 # K-fold crossvalidation
 K = 10
@@ -125,7 +125,7 @@ prior = Prior if np.sum(errors['nb'], 0)[0] > np.sum(errors['nb'], 0)[1] else No
 g1_errors['nb'] = np.min(np.sum(errors['nb'], 0))/N
 nb_classifier = MultinomialNB(alpha=alpha, fit_prior=True, class_prior=prior)
 
-l = np.argmin(np.sum(errors['knn'], 0))
+l = np.argmin(np.sum(errors['knn'], 0)) + 1
 g1_errors['knn'] = np.min(np.sum(errors['knn'], 0))/N
 knclassifier = KNeighborsClassifier(n_neighbors=l, p=p);
 
@@ -136,6 +136,8 @@ g1_errors['ann'] = np.min(np.sum(errors['ann'], 0))/N
 ann = MLPClassifier(solver='lbfgs',alpha=1e-4,\
     hidden_layer_sizes=hidden,random_state=0,max_iter=100,activation='relu')
 
+print('\n\t\t\tModel selection:\tD={0}\tC=1e{1}\tPrior={2}\tK={3}\th={4}'.format(
+        t, int(c-C/2), prior!=None, l, h))
 print('\t\t\tL1 Generalization err:\t{0:.4f}\t{1:.4f}\t{2:.4f}\t\t{3:.4f}\t{4:.4f}'.format(
         g1_errors['dtc'], g1_errors['log'], g1_errors['nb'], g1_errors['knn'], g1_errors['ann']))
 
@@ -169,7 +171,7 @@ g2_errors['ann'] = np.sum(y_est!=y_cv2)/N_cv2
 cm['ann'] = confusion_matrix(y_cv2, y_est);
 
 plt.figure()
-plt.plot(100*sum(errors['dtc'],0)/N)
+plt.plot(np.append([0,0], 100*sum(errors['dtc'],0)/N))
 plt.axvline(x=t, linewidth=2, color='r')
 plt.title('Decision Tree Classifier')
 plt.xlabel('Tree depth')
@@ -183,8 +185,8 @@ plt.xlabel('c (C = 1/lambda = 1/10^c)')
 plt.ylabel('Classification error rate (%)')
 
 plt.figure()
-plt.plot(100*sum(errors['knn'],0)/N)
-plt.axvline(x=l, linewidth=2, color='r')
+plt.plot(np.append([0], 100*sum(errors['knn'],0)/N))
+plt.axvline(x=l, linewidth=2, color='r');
 plt.title('KNN Classifier')
 plt.xlabel('Number of neighbors')
 plt.ylabel('Classification error rate (%)')
@@ -200,14 +202,16 @@ plt.title('ANN Classifier')
 plt.xlabel('Number of units in the second hidden layer')
 plt.ylabel('Number of units in the first hidden layer')
 
-print('\n\t\t\tModel selection:\tD={0}\tC=1e{1}\tPrior={2}\tK={3}\th={4}'.format(
-        t, int(c-C/2), prior!=None, l, h))
 print('\t\t\tL2 Generalization err:\t{0:.4f}\t{1:.4f}\t{2:.4f}\t\t{3:.4f}\t{4:.4f}'.format(
         g2_errors['dtc'], g2_errors['log'], g2_errors['nb'], g2_errors['knn'], g2_errors['ann']))
+print('N = {0} N_pos = {1:.0f} N_neg = {2:.0f}'.format(N_cv2, np.sum(y_cv2), N_cv2-np.sum(y_cv2)))
 for k, v in cm.items():
     accuracy = 100*v.diagonal().sum()/v.sum(); error_rate = 100-accuracy;
+    scaled = 100*(v[1,1]/(2*(v[1,1]+v[0,1]))+v[0,0]/(2*(v[0,0]+v[1,0])));
+    precision = 100*v[1,1]/(v[1,1]+v[0,1]); recall = 100*v[1,1]/(v[1,1]+v[1,0]);
     print('Classifier {0}:'.format(k))
-    print('\tAccuracy / ErrorRate\t{0:.4f}\t\t{1:.4f}'.format(accuracy, error_rate))
+    print('\tAccuracy {0:.4f}\tErrorRate {1:.4f}\tScaled Accuracy {2:.4f}'.format(accuracy, error_rate, scaled))
+    print('\tPrecision {0:.4f}\tRecall {1:.4f}'.format(precision, recall))
     print('\tConfusion Matrix\tTP={0}\t\tTN={1}\t\tFP={2}\t\tFN={3}'.format(v[1,1],v[0,0],v[0,1],v[1,0]))
     plt.figure()
     plt.imshow(v, cmap='binary', interpolation='None'); plt.colorbar();
