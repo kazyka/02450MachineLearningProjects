@@ -2,7 +2,6 @@
 from resolve_path import *
 
 from matplotlib.pyplot import figure, show
-from scipy.io import loadmat
 from toolbox_02450 import clusterplot
 from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 
