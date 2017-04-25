@@ -9,19 +9,19 @@ from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 N, M = X.shape
 
 # Perform hierarchical/agglomerative clustering on data matrix
-Method = 'single'
+Method = 'ward'
 Metric = 'euclidean'
 
 Z = linkage(X, method=Method, metric=Metric)
 
 # Compute and display clusters by thresholding the dendrogram
-Maxclust = 6
+Maxclust = 10
 cls = fcluster(Z, criterion='maxclust', t=Maxclust)
 figure(1)
-clusterplot(X, cls.reshape(cls.shape[0],1), y=y)
+clusterplot(X, cls.reshape(cls.shape[0],1))
 
 # Display dendrogram
-max_display_levels=20
+max_display_levels=10
 figure(2,figsize=(10,4))
 dendrogram(Z, truncate_mode='level', p=max_display_levels)
 

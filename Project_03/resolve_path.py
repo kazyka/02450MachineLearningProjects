@@ -26,12 +26,12 @@ sys.stderr.flush()
 # Load data from matlab file
 X = np.loadtxt(par_path + '/insuranceCompany_Data/ticdata2000.txt')
 
-y_ind = 3
+y_ind = -1
 X_ind = np.arange(start=0,stop=X.shape[1],step=1)
 X_ind = np.delete(X_ind,y_ind)
 
-y = X[:,y_ind]
-X = X[:,X_ind]
+y = X[:,-1]
+X = X[:,0:-1]
 '''idx = np.where(y==0)[0]
 keepIdx = np.where(y==1)[0]
 chosenIdx = np.random.choice(idx, size=(400,), replace=False)
