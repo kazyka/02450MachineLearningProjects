@@ -15,19 +15,19 @@ def runApriori(filename,minSup=40,minConf=100,maxRule=4):
 	if os.uname().sysname.lower() == 'linux':
 	    status1 = run('../../Toolbox/02450Toolbox_Python/Tools/apriori -f -s{0} -v"[Sup. %S]" {1} apriori_temp1.txt'.format(minSup, filename),shell=True)
 	else:
-	    status1 = run('../../Toolbox/02450Toolbox_Python/Tools/apriori.exe -f -s{0} -v"[Sup. %S]" {1} apriori_temp1.txt'.format(minSup, filename),shell=True)
+	    status1 = run('../../Toolbox/02450Toolbox_Python/Tools/aprioriMAC -f -s{0} -v"[Sup. %S]" {1} apriori_temp1.txt'.format(minSup, filename),shell=True)
 
 	if status1.returncode!=0:
 	    print('An error occured while calling apriori, a likely cause is that minSup was set to high such that no frequent itemsets were generated or spaces are included in the path to the apriori files.')
 	    exit()
 	if minConf>0:
 	    #print('Mining for associations by the Apriori algorithm')
-	    
+
 	    if os.uname().sysname.lower() == 'linux':
 	        status2 = run('../../Toolbox/02450Toolbox_Python/Tools/apriori -tr -f"," -n{0} -c{1} -s{2} -v"[Conf. %C,Sup. %S]" {3} apriori_temp2.txt'.format(maxRule, minConf, minSup, filename),shell=True)
 	    else:
-	        status2 = run('../../Toolbox/02450Toolbox_Python/Tools/apriori.exe -tr -f"," -n{0} -c{1} -s{2} -v"[Conf. %C,Sup. %S]" {3} apriori_temp2.txt'.format(maxRule, minConf, minSup, filename),shell=True)
-	    
+	        status2 = run('../../Toolbox/02450Toolbox_Python/Tools/aprioriMAC -tr -f"," -n{0} -c{1} -s{2} -v"[Conf. %C,Sup. %S]" {3} apriori_temp2.txt'.format(maxRule, minConf, minSup, filename),shell=True)
+
 	    if status2.returncode!=0:
 	        print('An error occured while calling apriori')
 	        exit()
@@ -45,7 +45,7 @@ def runApriori(filename,minSup=40,minConf=100,maxRule=4):
 	    FrequentItemsets[i] = line[0:-1]
 	    sup[i] = re.findall(' [-+]?\d*\.\d+|\d+]', line)[0][1:-1]
 	os.remove('apriori_temp1.txt')
-	    
+
 	# Read the file
 	f = open('apriori_temp2.txt','r')
 	lines = f.readlines()
@@ -56,16 +56,16 @@ def runApriori(filename,minSup=40,minConf=100,maxRule=4):
 	for i,line in enumerate(lines):
 	    AssocRules[i] = line[0:-1]
 	    conf[i] = re.findall(' [-+]?\d*\.\d+|\d+,', line)[0][1:-1]
-	os.remove('apriori_temp2.txt')    
+	os.remove('apriori_temp2.txt')
 
 	# sort (FrequentItemsets by support value, AssocRules by confidence value)
 	AssocRulesSorted = [AssocRules[item] for item in np.argsort(conf,axis=0).ravel()]
 	AssocRulesSorted.reverse()
 	FrequentItemsetsSorted = [FrequentItemsets[item] for item in np.argsort(sup,axis=0).ravel()]
 	FrequentItemsetsSorted.reverse()
-	    
+
 	# Print the results
-	import time; time.sleep(.5)    
+	import time; time.sleep(.5)
 	'''print('\n')
 	print('RESULTS:\n')
 	print('Frequent itemsets:')
@@ -84,5 +84,3 @@ Xnew = enc.transform(X).toarray()
 
 WriteAprioriFile(Xnew,filename="AprioriFileProject03.txt")
 runApriori("AprioriFileProject03.txt",minSup=1,minConf=10,maxRule=4)
-
-
