@@ -1,0 +1,110 @@
+1 41 MOSTYPE Customer Subtype
+
+2 10 MAANTHUI Number of houses
+
+3 6 MGEMOMV Avg size household
+
+4 6 MGEMLEEF Avg age
+
+5 10 MOSHOOFD Customer main type
+
+6 10 MGODRK Roman catholic
+7 10 MGODPR Protestant
+8 10 MGODOV Other religion
+9 10 MGODGE No religion
+
+10 10 MRELGE Married
+11 10 MRELSA Living together
+12 10 MRELOV Other relation
+13 10 MFALLEEN Singles
+
+14 10 MFGEKIND Household without children
+15 10 MFWEKIND Household with children
+
+16 10 MOPLHOOG High level education
+17 10 MOPLMIDD Medium level education
+18 10 MOPLLAAG Lower level education
+
+19 10 MBERHOOG High status
+20 10 MBERZELF Entrepreneur
+21 10 MBERBOER Farmer
+22 10 MBERMIDD Middle management
+23 10 MBERARBG Skilled labourers
+24 10 MBERARBO Unskilled labourers
+
+25 10 MSKA Social class A
+26 10 MSKB1 Social class B1
+27 10 MSKB2 Social class B2
+28 10 MSKC Social class C
+29 10 MSKD Social class D
+
+30 10 MHHUUR Rented house
+31 10 MHKOOP Home owners
+
+32 10 MAUT1 1 car
+33 10 MAUT2 2 cars
+34 10 MAUT0 No car
+
+35 10 MZFONDS National Health Service
+36 10 MZPART Private health insurance
+
+37 10 MINKM30 Income < 30.000
+38 10 MINK3045 Income 30-45.000
+39 10 MINK4575 Income 45-75.000
+40 10 MINK7512 Income 75-122.000
+41 10 MINK123M Income >123.000
+
+42 10 MINKGEM Average income
+
+43 10 MKOOPKLA Purchasing power class
+
+44 10 PWAPART Contribution private third party insurance
+45 10 PWABEDR Contribution third party insurance (firms)
+46 10 PWALAND Contribution third party insurance (agriculture)
+
+47 10 PPERSAUT Contribution car policies
+48 10 PBESAUT Contribution delivery van policies
+49 10 PMOTSCO Contribution motorcycle/scooter policies
+50 10 PVRAAUT Contribution lorry policies
+51 10 PAANHANG Contribution trailer policies
+52 10 PTRACTOR Contribution tractor policies
+53 10 PWERKT Contribution agricultural machines policies
+54 10 PBROM Contribution moped policies
+
+55 10 PLEVEN Contribution life insurances
+56 10 PPERSONG Contribution private accident insurance policies
+57 10 PGEZONG Contribution family accidents insurance policies
+58 10 PWAOREG Contribution disability insurance policies
+59 10 PBRAND Contribution fire policies
+
+60 10 PZEILPL Contribution surfboard policies
+61 10 PPLEZIER Contribution boat policies
+62 10 PFIETS Contribution bicycle policies
+63 10 PINBOED Contribution property insurance policies
+64 10 PBYSTAND Contribution social security insurance policies
+
+65 12 AWAPART Number of private third party insurance
+66 12 AWABEDR Number of third party insurance (firms)
+67 12 AWALAND Number of third party insurance (agriculture)
+
+68 12 APERSAUT Number of car policies
+69 12 ABESAUT Number of delivery van policies
+70 12 AMOTSCO Number of motorcycle/scooter policies
+71 12 AVRAAUT Number of lorry policies
+72 12 AAANHANG Number of trailer policies
+73 12 ATRACTOR Number of tractor policies
+74 12 AWERKT Number of agricultural machines policies
+75 12 ABROM Number of moped policies
+
+76 12 ALEVEN Number of life insurances
+77 12 APERSONG Number of private accident insurance policies
+78 12 AGEZONG Number of family accidents insurance policies
+79 12 AWAOREG Number of disability insurance policies
+80 12 ABRAND Number of fire policies
+
+81 12 AZEILPL Number of surfboard policies
+82 12 APLEZIER Number of boat policies
+83 12 AFIETS Number of bicycle policies
+84 12 AINBOED Number of property insurance policies
+85 12 ABYSTAND Number of social security insurance policies
+86 2 CARAVAN Number of mobile home policies
